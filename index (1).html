@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BakrLabs</title>
+<meta name="description" content="Independent developer building Rust tools, engineering software, websites and Android apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2f5f9;
+  --card:#ffffff;
+  --ink:#0e1330;
+  --navy:#14185a;
+  --teal:#0f8aa8;
+  --muted:#586080;
+  --line:#d5dbe7;
+  --font:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0c0f2a;
+    --card:#141a44;
+    --ink:#eef1fa;
+    --navy:#b9c2ff;
+    --teal:#3cc3e2;
+    --muted:#9aa3c8;
+    --line:#252c5e;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-text-size-adjust:100%;
+}
+html[lang="ar"] body{line-height:1.9}
+a{color:var(--teal);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+header{padding:18px 0;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:700;font-size:20px;color:var(--navy);text-decoration:none;letter-spacing:-.01em}
+.lang{
+  font:inherit;font-size:15px;font-weight:600;
+  background:transparent;color:var(--navy);
+  border:1.5px solid var(--navy);border-radius:6px;
+  padding:6px 14px;cursor:pointer;
+}
+.lang:hover{background:var(--navy);color:var(--paper)}
+.hero{position:relative;overflow:hidden;padding:72px 0 80px}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative}
+h1{
+  font-size:clamp(34px,7vw,58px);
+  line-height:1.12;
+  letter-spacing:-.025em;
+  color:var(--navy);
+  max-width:13em;
+  font-weight:700;
+}
+html[lang="ar"] h1{line-height:1.35;letter-spacing:0}
+.lead{margin-top:20px;max-width:30em;color:var(--muted);font-size:19px}
+section{padding:48px 0;border-top:1px solid var(--line)}
+h2{font-size:28px;letter-spacing:-.015em;color:var(--navy);margin-bottom:24px}
+html[lang="ar"] h2{letter-spacing:0}
+.services{display:grid;gap:18px}
+.svc{padding-inline-start:18px;border-inline-start:3px solid var(--teal)}
+.svc h3{font-size:19px;color:var(--ink);margin-bottom:4px}
+.svc p{color:var(--muted)}
+.work{display:grid;gap:26px}
+.win{
+  background:#0e1330;
+  border:1px solid #2a3170;
+  border-radius:8px;
+  overflow:hidden;
+  direction:ltr;text-align:left;
+  font-family:var(--mono);
+  user-select:none;-webkit-user-select:none;
+}
+.bar{
+  padding:8px 14px;
+  background:#171d52;
+  color:#9aa3c8;
+  font-size:13px;
+}
+.body{
+  padding:14px;
+  min-height:9.6em;
+  font-size:13.5px;
+  line-height:1.6;
+  color:#b9c2ff;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.body .p{color:#3cc3e2}
+.body .c{color:#eef1fa}
+.cap{margin-top:10px;color:var(--muted);font-size:16px}
+.cap a{display:inline-block;margin-top:2px;font-weight:600}
+.about{max-width:36em;color:var(--muted)}
+.about p+p{margin-top:14px}
+.contact a.btn{
+  display:inline-block;margin-top:6px;
+  background:var(--navy);color:var(--paper);
+  font-weight:600;text-decoration:none;
+  padding:12px 24px;border-radius:6px;
+}
+.contact a.btn:hover{background:var(--teal);color:#fff}
+.links{margin-top:18px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:15px;border-top:1px solid var(--line)}
+@media (min-width:720px){
+  .services{grid-template-columns:repeat(2,1fr);gap:28px 36px}
+  .work{grid-template-columns:repeat(3,1fr);gap:20px}
+  .hero{padding:110px 0 120px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">BakrLabs</a>
+    <button class="lang" id="langBtn" type="button" aria-label="Switch language">العربية</button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <canvas id="orbit" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <h1 data-i="title"></h1>
+      <p class="lead" data-i="lead"></p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2 data-i="servicesTitle"></h2>
+      <div class="services">
+        <div class="svc"><h3 data-i="s1t"></h3><p data-i="s1d"></p></div>
+        <div class="svc"><h3 data-i="s2t"></h3><p data-i="s2d"></p></div>
+        <div class="svc"><h3 data-i="s4t"></h3><p data-i="s4d"></p></div>
+        <div class="svc"><h3 data-i="s3t"></h3><p data-i="s3d"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 data-i="workTitle"></h2>
+      <div class="work">
+        <div>
+          <div class="win" data-n="0" role="img" aria-label="encrpt running in a terminal"><div class="bar">encrpt</div><div class="body"></div></div>
+          <p class="cap"><span data-i="p1"></span><br><a href="https://github.com/BakrLabs/encrpt" data-i="gh"></a></p>
+        </div>
+        <div>
+          <div class="win" data-n="1" role="img" aria-label="unit-converter running in a terminal"><div class="bar">unit-converter</div><div class="body"></div></div>
+          <p class="cap"><span data-i="p2"></span><br><a href="https://github.com/BakrLabs/unit-converter" data-i="gh"></a></p>
+        </div>
+        <div>
+          <div class="win" data-n="2" role="img" aria-label="vis-viva-cli running in a terminal"><div class="bar">vis-viva-cli</div><div class="body"></div></div>
+          <p class="cap"><span data-i="p3"></span><br><a href="https://github.com/BakrLabs/vis-viva-cli" data-i="gh"></a></p>
+        </div>
+      </div>
+      <p style="margin-top:26px"><a href="https://github.com/BakrLabs?tab=repositories" data-i="allWork"></a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 data-i="aboutTitle"></h2>
+      <div class="about">
+        <p data-i="about1"></p>
+        <p data-i="about2"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="wrap">
+      <h2 data-i="contactTitle"></h2>
+      <p data-i="contactText"></p>
+      <a class="btn" href="mailto:your-email@example.com" data-i="contactBtn"></a>
+      <p class="links"><a href="https://github.com/BakrLabs">GitHub</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> BakrLabs</div>
+</footer>
+
+<script>
+const text = {
+  en: {
+    title: "Software that does one job well.",
+    lead: "I’m Mohamed, an independent developer. I build command-line tools, engineering software, websites and Android apps.",
+    servicesTitle: "What I build",
+    s1t: "Websites and landing pages",
+    s1d: "Fast, responsive sites in English and Arabic, built to be easy to read on a phone.",
+    s2t: "Rust tools and automation",
+    s2d: "Command-line programs and scripts that automate repetitive work, including engineering and science calculators.",
+    s4t: "Systems and low-level software",
+    s4d: "Operating systems, embedded and other systems-level software, where memory, hardware and timing matter.",
+    s3t: "Android apps",
+    s3d: "Small, focused apps written in Kotlin and Rust.",
+    workTitle: "Open source work",
+    p1: "File encryption from the terminal.",
+    p2: "A unit converter that understands plain sentences.",
+    p3: "An orbital mechanics and propulsion calculator.",
+    gh: "View on GitHub",
+    allWork: "See all repositories on GitHub",
+    aboutTitle: "About",
+    about1: "I work under the name BakrLabs and take on projects of any size, from small utilities to complex engineering and scientific software. I plan the work, build it carefully and explain what I’ve delivered.",
+    about2: "I also have a background in networking and cybersecurity, which shapes how I handle data, files and passwords in everything I build.",
+    contactTitle: "Work with me",
+    contactText: "Tell me what you need built and I’ll reply with a plan and a price.",
+    contactBtn: "Send an email",
+    toggle: "العربية"
+  },
+  ar: {
+    title: "برامج تؤدي مهمة واحدة وتؤديها جيدًا.",
+    lead: "أنا محمد، مطوّر مستقل. أبني أدوات سطر الأوامر وبرامج هندسية ومواقع وتطبيقات أندرويد.",
+    servicesTitle: "ماذا أبني",
+    s1t: "المواقع وصفحات الهبوط",
+    s1d: "مواقع سريعة ومتجاوبة بالعربية والإنجليزية، وسهلة القراءة على الهاتف.",
+    s2t: "أدوات Rust والأتمتة",
+    s2d: "برامج وسكربتات لأتمتة الأعمال المتكررة، ومنها حاسبات هندسية وعلمية.",
+    s4t: "الأنظمة والبرمجيات منخفضة المستوى",
+    s4d: "أنظمة تشغيل وبرمجيات مدمجة وأنظمة أخرى قريبة من العتاد، حيث تهم الذاكرة والأداء والتوقيت.",
+    s3t: "تطبيقات أندرويد",
+    s3d: "تطبيقات صغيرة ومركّزة بلغتي Kotlin وRust.",
+    workTitle: "أعمال مفتوحة المصدر",
+    p1: "تشفير الملفات من سطر الأوامر.",
+    p2: "محوّل وحدات يفهم الجمل العادية.",
+    p3: "حاسبة لميكانيكا المدارات والدفع.",
+    gh: "شاهده على GitHub",
+    allWork: "شاهد كل المشاريع على GitHub",
+    aboutTitle: "نبذة عني",
+    about1: "أعمل باسم BakrLabs وأتولى مشاريع بمختلف أحجامها، من الأدوات الصغيرة إلى البرمجيات الهندسية والعلمية المعقدة. أخطط للعمل وأنفذه بعناية وأشرح ما سلّمته.",
+    about2: "لدي أيضًا خلفية في الشبكات والأمن السيبراني، وهي تؤثر في طريقة تعاملي مع البيانات والملفات وكلمات المرور في كل ما أبنيه.",
+    contactTitle: "تعاون معي",
+    contactText: "أخبرني بما تريد بناءه وسأرد عليك بخطة وسعر.",
+    contactBtn: "أرسل رسالة بالبريد",
+    toggle: "English"
+  }
+};
+
+const demos = [
+  {
+    cmd: "encrpt encrypt -i secret.txt -o secret.enc",
+    out: ["Password:", "Confirm password:", "Saved secret.enc"]
+  },
+  {
+    cmd: "how many meters are in 5 kilometers",
+    out: ["5 kilometers = 5000 meters"]
+  },
+  {
+    cmd: "orbit 400 km",
+    out: ["Circular speed: 7.67 km/s", "Period: 92.4 min"]
+  }
+];
+
+let lang = "en";
+
+function apply(next) {
+  lang = next;
+  const html = document.documentElement;
+  html.lang = next;
+  html.dir = next === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i]").forEach(el => {
+    el.textContent = text[next][el.dataset.i];
+  });
+  document.getElementById("langBtn").textContent = text[next].toggle;
+  document.title = next === "ar" ? "BakrLabs | مطوّر مستقل" : "BakrLabs | Independent developer";
+  drawOrbit(performance.now());
+}
+
+function startLang() {
+  try {
+    const saved = localStorage.getItem("lang");
+    if (saved === "ar" || saved === "en") return saved;
+  } catch (e) {}
+  const prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+  return String(prefs[0]).toLowerCase().startsWith("ar") ? "ar" : "en";
+}
+
+document.getElementById("langBtn").addEventListener("click", () => {
+  const next = lang === "en" ? "ar" : "en";
+  try { localStorage.setItem("lang", next); } catch (e) {}
+  apply(next);
+});
+
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+async function play(win) {
+  const demo = demos[Number(win.dataset.n)];
+  const body = win.querySelector(".body");
+  body.textContent = "";
+  const prompt = document.createElement("span");
+  prompt.className = "p";
+  prompt.textContent = "$ ";
+  const typed = document.createElement("span");
+  typed.className = "c";
+  body.append(prompt, typed);
+  if (still) {
+    typed.textContent = demo.cmd;
+    body.append("\n" + demo.out.join("\n"));
+    return;
+  }
+  for (const ch of demo.cmd) {
+    typed.textContent += ch;
+    await wait(38);
+  }
+  await wait(450);
+  for (const line of demo.out) {
+    body.append("\n" + line);
+    await wait(420);
+  }
+}
+
+const seen = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      seen.unobserve(e.target);
+      play(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll(".win").forEach(w => seen.observe(w));
+
+const canvas = document.getElementById("orbit");
+const ctx = canvas.getContext("2d");
+let w = 0, h = 0, tealColor = "#0f8aa8", navyColor = "#14185a";
+
+function sizeCanvas() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const box = canvas.getBoundingClientRect();
+  w = box.width;
+  h = box.height;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function readColors() {
+  const s = getComputedStyle(document.documentElement);
+  tealColor = s.getPropertyValue("--teal").trim();
+  navyColor = s.getPropertyValue("--navy").trim();
+}
+
+function drawOrbit(t) {
+  if (!w) return;
+  const rtl = document.documentElement.dir === "rtl";
+  const narrow = w < 720;
+  const e = 0.55;
+  const a = narrow ? w * 0.5 : Math.min(w * 0.27, h * 0.7);
+  const b = a * Math.sqrt(1 - e * e);
+  const cx = narrow ? w * 0.5 : (rtl ? w * 0.25 : w * 0.75);
+  const cy = h * 0.5;
+  const M = t * 0.0004;
+  let E = M;
+  for (let i = 0; i < 6; i++) E = M + e * Math.sin(E);
+
+  ctx.clearRect(0, 0, w, h);
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(rtl ? 0.35 : -0.35);
+  ctx.globalAlpha = narrow ? 0.3 : 0.55;
+
+  ctx.strokeStyle = tealColor;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, a, b, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.fillStyle = navyColor;
+  ctx.beginPath();
+  ctx.arc(a * e, 0, 9, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = tealColor;
+  ctx.beginPath();
+  ctx.arc(a * Math.cos(E), b * Math.sin(E), 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function loop(t) {
+  if (!document.hidden) drawOrbit(t);
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener("resize", () => {
+  sizeCanvas();
+  drawOrbit(performance.now());
+});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  readColors();
+  drawOrbit(performance.now());
+});
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+apply(startLang());
+sizeCanvas();
+readColors();
+if (still) drawOrbit(2500);
+else requestAnimationFrame(loop);
+</script>
+</body>
+</html>
